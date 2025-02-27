@@ -1,14 +1,22 @@
+import unittest
 import requests
 
-def test_log_creation():
-    response = requests.post('http://localhost:5000/api/logs', json={'message': 'Test log'})
-    assert response.status_code == 201
+class TestMicroservices(unittest.TestCase):
 
-def test_notification():
-    response = requests.post('http://localhost:5001/api/notify', json={'message': 'Test notification'})
-    assert response.status_code == 200
+    def test_log_creation(self):
+        response = requests.post(
+            'http://log_service:5000/api/logs',
+            json={'message': 'Test log'}
+        )
+        self.assertEqual(response.status_code, 201)
 
-if __name__ == "__main__":
-    test_log_creation()
-    test_notification()
-    print("All tests passed!")
+    def test_get_logs(self):
+        response = requests.get('http://log_service:5000/api/logs')
+        self.assertEqual(response.status_code, 200)
+
+    def test_notification(self):
+        response = requests.post(
+            'http://notification_service:5001/api/notify',
+            json={'message': 'Test notification'}
+        )
+        self.assertEqual(response.status_code, 200)
