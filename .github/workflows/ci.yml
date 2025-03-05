@@ -27,3 +27,4 @@ jobs:
         run: |
           docker build -t log_service ./log_service
           docker build -t notification_service ./notification_service
+          docker build -t telegram_service ./telegram_service

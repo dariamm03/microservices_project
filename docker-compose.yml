@@ -1,0 +1,25 @@
+services:
+  log_service:
+    build: ./log_service
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+
+  notification_service:
+    build: ./notification_service
+    ports:
+      - "5001:5001"
+    networks:
+      - mynetwork
+
+  telegram_service:
+    build: ./telegram_service
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
